@@ -1,442 +1,1009 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terraria Boss Guide</title>
-
-  <!-- KLÍČOVÝ ŘÁDEK: Blokuje odkazování původního webu, aby wiki neblokovala obrázky -->
-  <meta name="referrer" content="no-referrer">
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1f2937">
+  <title>Terraria Boss Progression & Companion</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            slate: {
+              850: '#131e32',
+              950: '#090d16',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar and sleek styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+    .custom-checkbox:checked + div {
+      background-color: #10b981;
+      border-color: #10b981;
+    }
+    .custom-checkbox:checked + div svg {
+      display: block;
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen pb-10">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-slate-950">
 
-  <!-- Header -->
-  <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-10 px-4 py-4 shadow-lg">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <h1 class="text-2xl font-bold text-green-400 flex items-center gap-2">
-        🌳 Terraria Boss Guide
-      </h1>
-      <button id="installBtn" class="hidden bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg shadow transition flex items-center gap-2">
-        📲 Uložit na plochu
-      </button>
+  <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-30 shadow-xl">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-0.5 shadow-lg shadow-emerald-500/20 flex items-center justify-center">
+          <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            Terraria Boss Companion
+          </h1>
+          <p class="text-xs text-slate-400 font-medium">Interactive Progression & Strategy Guide</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+        <button id="resetBtn" class="text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition flex items-center gap-1.5 shadow-sm">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          Reset Progress
+        </button>
+      </div>
+
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 mt-6">
-    <!-- Search & Filters -->
-    <div class="flex flex-col md:flex-row gap-4 mb-6">
-      <input type="text" id="searchInput" placeholder="Hledat bosse, biom nebo předmět..." 
-             class="flex-1 bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-      
-      <select id="stageFilter" class="bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-        <option value="all">Všechny kategorie</option>
-        <option value="Pre-Hardmode">Pre-Hardmode</option>
-        <option value="Hardmode">Hardmode</option>
-        <option value="Event Boss">Event Bosses</option>
-      </select>
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 my-8 flex-1 w-full space-y-6">
+
+    <!-- Overall Dashboard Banner -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-10 -top-10 w-64 h-64 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+        
+        <!-- Left: Overall Completion -->
+        <div class="space-y-2 flex-1">
+          <div class="flex justify-between items-baseline">
+            <span class="text-sm font-semibold uppercase tracking-wider text-slate-400">Overall World Defeat Progress</span>
+            <span id="overallPercentage" class="text-2xl font-black font-mono text-emerald-400">0%</span>
+          </div>
+          <div class="w-full bg-slate-950 rounded-full h-3.5 p-0.5 border border-slate-800 shadow-inner overflow-hidden">
+            <div id="overallBar" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 h-full rounded-full transition-all duration-500 ease-out w-0 shadow-lg shadow-emerald-500/30"></div>
+          </div>
+          <div class="flex justify-between text-xs text-slate-400 font-mono">
+            <span id="overallCounter">0 / 28 Bosses Defeated</span>
+            <span id="overallRemaining">28 Remaining</span>
+          </div>
+        </div>
+
+        <!-- Right: Category Mini Badges -->
+        <div class="grid grid-cols-3 gap-3 w-full lg:w-auto border-t lg:border-t-0 lg:border-l border-slate-800 pt-4 lg:pt-0 lg:pl-6">
+          
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-center min-w-[100px]">
+            <span class="text-[10px] font-bold uppercase text-emerald-400 block tracking-wide">Pre-Hardmode</span>
+            <span id="preHmCount" class="text-base font-bold font-mono text-slate-200 mt-0.5 block">0/8</span>
+            <div class="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+              <div id="preHmBar" class="bg-emerald-400 h-full w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-center min-w-[100px]">
+            <span class="text-[10px] font-bold uppercase text-purple-400 block tracking-wide">Hardmode</span>
+            <span id="hmCount" class="text-base font-bold font-mono text-slate-200 mt-0.5 block">0/10</span>
+            <div class="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+              <div id="hmBar" class="bg-purple-400 h-full w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-center min-w-[100px]">
+            <span class="text-[10px] font-bold uppercase text-amber-400 block tracking-wide">Events</span>
+            <span id="eventCount" class="text-base font-bold font-mono text-slate-200 mt-0.5 block">0/10</span>
+            <div class="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+              <div id="eventBar" class="bg-amber-400 h-full w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
 
-    <!-- Boss List -->
-    <div id="bossList" class="flex flex-col gap-3"></div>
+    <!-- Filters & Search Toolbar -->
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-md space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
+      
+      <!-- Search Input -->
+      <div class="relative flex-1">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <input type="text" id="searchInput" placeholder="Search boss name, biome, or summon item..." 
+               class="w-full bg-slate-950 border border-slate-800 text-slate-100 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition placeholder:text-slate-500">
+      </div>
+
+      <!-- Filters Group -->
+      <div class="flex flex-wrap sm:flex-nowrap items-center gap-2">
+        
+        <!-- Stage Filter -->
+        <div class="w-1/2 sm:w-auto flex-1 min-w-[130px]">
+          <select id="stageFilter" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-lg px-3 py-2.5 text-xs font-semibold focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+            <option value="all">All Stages</option>
+            <option value="Pre-Hardmode">Pre-Hardmode</option>
+            <option value="Hardmode">Hardmode</option>
+            <option value="Event Boss">Event Bosses</option>
+          </select>
+        </div>
+
+        <!-- Defeat Status Filter -->
+        <div class="w-1/2 sm:w-auto flex-1 min-w-[130px]">
+          <select id="statusFilter" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-lg px-3 py-2.5 text-xs font-semibold focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+            <option value="all">All Statuses</option>
+            <option value="remaining">Remaining Only</option>
+            <option value="defeated">Defeated Only</option>
+          </select>
+        </div>
+
+        <!-- Sorting Filter -->
+        <div class="w-full sm:w-auto flex-1 min-w-[140px]">
+          <select id="sortOption" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-lg px-3 py-2.5 text-xs font-semibold focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+            <option value="progression">Sort: Progression</option>
+            <option value="name-asc">Sort: Name (A-Z)</option>
+            <option value="name-desc">Sort: Name (Z-A)</option>
+            <option value="hp-asc">Sort: Health (Low to High)</option>
+            <option value="hp-desc">Sort: Health (High to Low)</option>
+          </select>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Boss Cards Container -->
+    <div id="bossList" class="space-y-3"></div>
+
   </main>
 
+  <!-- Reset Confirmation Modal -->
+  <div id="resetModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <div class="w-12 h-12 rounded-full bg-rose-500/10 text-rose-400 flex items-center justify-center mx-auto border border-rose-500/20">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      <div class="text-center space-y-1">
+        <h3 class="text-lg font-bold text-slate-100">Reset All Progress?</h3>
+        <p class="text-xs text-slate-400">This will uncheck all defeated bosses and clear your saved progression data.</p>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button id="cancelReset" class="flex-1 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition">Cancel</button>
+        <button id="confirmReset" class="flex-1 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-semibold transition shadow-lg shadow-rose-600/30">Yes, Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p>© Terraria Boss Guide Companion. Built for all adventurers.</p>
+      <p class="font-mono text-[11px] text-slate-600">Updated for Terraria 1.4.4+</p>
+    </div>
+  </footer>
+
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
-
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.remove('hidden');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        installBtn.classList.add('hidden');
-      }
-      deferredPrompt = null;
-    });
-
-    // Odkaz přímo na oficiální Terraria Wiki (wiki.gg)
-    const getWikiImg = (filename) => `https://terraria.wiki.gg/wiki/Special:FilePath/${filename}`;
-
     const bosses = [
       // --- PRE-HARDMODE ---
       {
+        id: "king-slime",
         name: "King Slime",
         stage: "Pre-Hardmode",
-        image: getWikiImg("King_Slime.gif"),
+        progressionOrder: 1,
+        symbol: "KS",
+        theme: "emerald",
         biome: "Surface / Forest",
-        summon: "Slime Crown (20 Gel + Gold/Platinum Crown u Altaru) nebo během akce Slime Rain",
-        hp: "2,000 (Classic) / 2,800 (Expert) / 3,570 (Master)",
-        drops: "Solidifier, Slime Hook, Ninja Gear díly, Royal Gel (Expert)",
-        notes: "Volitelný první boss. Postavení plošiny ve výšce z něj udělá velmi snadný souboj."
+        summon: "Slime Crown (20 Gel + Gold/Platinum Crown at Altar) or spawns randomly during Slime Rain",
+        hpClassic: 2000,
+        hpExpert: 2800,
+        hpMaster: 3570,
+        drops: ["Solidifier", "Slime Hook", "Ninja Gear Set", "Slime Gun"],
+        expertDrops: ["Royal Gel (Expert)", "King Slime Relic (Master)", "Regal Delicacy Pet (Master)"],
+        notes: "Optional introductory boss. Build an elevated platform 15-20 blocks high to stay out of jump reach while attacking with ranged or magic weapons."
       },
       {
+        id: "eye-of-cthulhu",
         name: "Eye of Cthulhu",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Eye_of_Cthulhu.gif"),
+        progressionOrder: 2,
+        symbol: "EOC",
+        theme: "emerald",
         biome: "Surface (Night)",
-        summon: "Suspicious Looking Eye (6 Lenses u Altaru) nebo 33% šance každou noc (pokud máte HP > 200)",
-        hp: "2,800 (Classic) / 3,640 (Expert) / 4,641 (Master)",
-        drops: "Demonite / Crimtane Ore, Corrupt / Crimson Seeds, Shield of Cthulhu (Expert)",
-        notes: "Při poklesu pod 50 % HP se promění v 2. fázi bez zornice a začne rychle útočit."
+        summon: "Suspicious Looking Eye (6 Lenses at Demon/Crimson Altar) or 33% night spawn chance if HP > 200 & 3+ NPCs",
+        hpClassic: 2800,
+        hpExpert: 3640,
+        hpMaster: 4641,
+        drops: ["Demonite / Crimtane Ore", "Corrupt / Crimson Seeds", "Unholy Arrows"],
+        expertDrops: ["Shield of Cthulhu (Expert Dash)", "EoC Relic (Master)", "Suspicious Grinning Eye (Master)"],
+        notes: "Transforms into Phase 2 below 50% health, removing its pupil to charge aggressively. Utilize swift mobility boots and a long wooden platform arena."
       },
       {
+        id: "eater-of-worlds",
         name: "Eater of Worlds",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Eater_of_Worlds.gif"),
+        progressionOrder: 3,
+        symbol: "EOW",
+        theme: "emerald",
         biome: "The Corruption",
-        summon: "Worm Food (30 Vile Powder + 15 Rotten Chunk) nebo zničení 3 Shadow Orbs",
-        hp: "10,050 celkově (Classic) / 15,120 (Expert)",
-        drops: "Demonite Ore, Shadow Scale, Worm Scarf (Expert)",
-        notes: "Červ složený z více částí. Nejlépe na něj platí zbraně s průrazem (piercing)."
+        summon: "Worm Food (30 Vile Powder + 15 Rotten Chunks) or destroying 3 Shadow Orbs",
+        hpClassic: 10050,
+        hpExpert: 15120,
+        hpMaster: 19278,
+        drops: ["Demonite Ore", "Shadow Scales", "Eater's Bone"],
+        expertDrops: ["Worm Scarf (17% Damage Reduction)", "EoW Relic (Master)", "Eater of Worms Pet (Master)"],
+        notes: "Multi-segmented worm that splits into independent sections when middle segments break. Piercing weapons like Grenades, Vilethorn, or Ball 'O Hurt excel here."
       },
       {
+        id: "brain-of-cthulhu",
         name: "Brain of Cthulhu",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Brain_of_Cthulhu.gif"),
+        progressionOrder: 4,
+        symbol: "BOC",
+        theme: "emerald",
         biome: "The Crimson",
-        summon: "Bloody Spine (30 Vicious Powder + 15 Vertebrae) nebo zničení 3 Crimson Hearts",
-        hp: "1,250 (Classic) / 2,125 (Expert)",
-        drops: "Crimtane Ore, Tissue Sample, Brain of Confusion (Expert)",
-        notes: "1. fáze vyžaduje zničení létajících Creepers. 2. fáze vytváří iluze a teleportuje se."
+        summon: "Bloody Spine (30 Vicious Powder + 15 Vertebrae) or destroying 3 Crimson Hearts",
+        hpClassic: 1250,
+        hpExpert: 2125,
+        hpMaster: 2709,
+        drops: ["Crimtane Ore", "Tissue Samples", "Bone Rattle"],
+        expertDrops: ["Brain of Confusion (Dodge & Confuse)", "BoC Relic (Master)", "Brain In A Jar (Master)"],
+        notes: "Phase 1: Immune to damage while orbiting Creepers attack. Phase 2: Brain charges directly and creates mirror illusions in Expert/Master modes."
       },
       {
+        id: "queen-bee",
         name: "Queen Bee",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Queen_Bee.gif"),
+        progressionOrder: 5,
+        symbol: "QB",
+        theme: "emerald",
         biome: "Underground Jungle",
-        summon: "Abeemination nebo rozbití Larvy v včelím úlu (Bee Hive)",
-        hp: "3,400 (Classic) / 4,760 (Expert)",
-        drops: "Bee Gun, Bee Keeper, Hive Pack (Expert)",
-        notes: "Střídá horizontální nálety a vyvolávání malých včel."
+        summon: "Abeemination (5 Honeycomb + 1 Stinger + 5 Hive + 1 Bottled Honey) or breaking Larva in Bee Hives",
+        hpClassic: 3400,
+        hpExpert: 4760,
+        hpMaster: 6069,
+        drops: ["Bee Gun", "Bee Keeper", "The Bee's Knees", "Honeyed Goggles"],
+        expertDrops: ["Hive Pack (Boosts Friendly Bees)", "Queen Bee Relic (Master)", "Sparkling Honey Pet (Master)"],
+        notes: "Alternates between swift horizontal charging, hovering to shoot stingers, and spawning small worker bees. Bearenter with Beekeeping gear or Beeshields."
       },
       {
+        id: "skeletron",
         name: "Skeletron",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Skeletron.gif"),
+        progressionOrder: 6,
+        symbol: "SKL",
+        theme: "emerald",
         biome: "Dungeon Entrance",
-        summon: "Promluvte s Old Manem u vchodu do Dungeonu v noci",
-        hp: "4,400 (Classic) / 8,800 (Expert)",
-        drops: "Skeletron Hand, Book of Skulls, Bone Glove (Expert)",
-        notes: "Poražení Skeletrona zpřístupní bezpečný vstup do celého Dungeonu."
+        summon: "Talk to Old Man at Dungeon entrance at Night, or equip Clothier Voodoo Doll to kill the Clothier",
+        hpClassic: 4400,
+        hpExpert: 8800,
+        hpMaster: 11220,
+        drops: ["Skeletron Hand", "Book of Skulls", "Skeletron Mask"],
+        expertDrops: ["Bone Glove (Expert)", "Skeletron Relic (Master)", "Possessed Skull (Master)"],
+        notes: "Destroy both hands first to reduce head defense. In Expert mode, the head fires homing skulls when hands are destroyed. Defeating unlocks safe Dungeon entry."
       },
       {
+        id: "deerclops",
         name: "Deerclops",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Deerclops.gif"),
+        progressionOrder: 7,
+        symbol: "DC",
+        theme: "emerald",
         biome: "Snow Biome (Midnight / Blizzard)",
-        summon: "Deer Thing (1 Flinx Fur + 5 Demonite/Crimtane Ore + 1 Lens)",
-        hp: "7,000 (Classic) / 11,900 (Expert)",
-        drops: "Eye Bone, Lucy the Axe, Bone Helm (Expert)",
-        notes: "Crossover boss ze hry Don't Starve Together."
+        summon: "Deer Thing (1 Flinx Fur + 5 Demonite/Crimtane Ore + 1 Lens) in Snow Biome",
+        hpClassic: 7000,
+        hpExpert: 11900,
+        hpMaster: 15172,
+        drops: ["Eye Bone (Chester Portable Storage)", "Lucy the Axe", "Pew-matic Horn", "Weather Pain"],
+        expertDrops: ["Bone Helm (Shadow Hands Attack)", "Deerclops Relic (Master)", "Tiny Deerclops (Master)"],
+        notes: "Don't Starve Crossover Boss. Stays invulnerable when far away from the player. Stay close and shadow-step over its ice spike waves."
       },
       {
+        id: "wall-of-flesh",
         name: "Wall of Flesh",
         stage: "Pre-Hardmode",
-        image: getWikiImg("Wall_of_Flesh.gif"),
+        progressionOrder: 8,
+        symbol: "WOF",
+        theme: "emerald",
         biome: "Underworld",
-        summon: "Hozte Guide Voodoo Doll do lávy v Underworldu, dokud žije Guide",
-        hp: "8,000 (Classic) / 11,200 (Expert)",
-        drops: "Pwnhammer, Class Emblem, Demon Heart (Expert)",
-        notes: "Poražením tohoto bosse trvale přepnete svět do režimu Hardmode."
+        summon: "Drop Guide Voodoo Doll into Underworld lava while the Guide NPC is alive",
+        hpClassic: 8000,
+        hpExpert: 11200,
+        hpMaster: 14280,
+        drops: ["Pwnhammer (Destroys Altars)", "Warrior/Ranger/Sorcerer/Summoner Emblem", "Clockwork Assault Rifle"],
+        expertDrops: ["Demon Heart (+1 Accessory Slot)", "WoF Relic (Master)", "Goat Skull Mount (Master)"],
+        notes: "Moves steadily in one direction across hell. Build a flat bridge 1,000+ blocks long across the Underworld lava. Defeating transitions world into Hardmode!"
       },
 
       // --- HARDMODE ---
       {
+        id: "queen-slime",
         name: "Queen Slime",
         stage: "Hardmode",
-        image: getWikiImg("Queen_Slime.gif"),
+        progressionOrder: 9,
+        symbol: "QS",
+        theme: "purple",
         biome: "The Hallow",
-        summon: "Gelatin Crystal (těží se v Underground Hallow)",
-        hp: "18,000 (Classic) / 28,800 (Expert)",
-        drops: "Crystal Assassin Armor, Gelatinous Pillion, Volatile Gelatin (Expert)",
-        notes: "V 2. fázi jí narostou křídla, začne létat a střílet krystaly."
+        summon: "Gelatin Crystal (mined from Pearlstone in Underground Hallow) used in Hallow",
+        hpClassic: 18000,
+        hpExpert: 28800,
+        hpMaster: 36720,
+        drops: ["Crystal Assassin Armor Set", "Gelatinous Pillion (Winged Slime Mount)", "Hook of Dissonance"],
+        expertDrops: ["Volatile Gelatin (Expert)", "Queen Slime Relic (Master)", "Regal Gel Pet (Master)"],
+        notes: "Early Hardmode boss. Spawns crystal minions. In Phase 2, grows wings and flies around unleashing barrage attacks."
       },
       {
+        id: "the-twins",
         name: "The Twins",
         stage: "Hardmode",
-        image: getWikiImg("The_Twins.gif"),
+        progressionOrder: 10,
+        symbol: "TWN",
+        theme: "purple",
         biome: "Surface (Night)",
-        summon: "Mechanical Eye (3 Lens + 5 Copper/Tin + 6 Soul of Light)",
-        hp: "43,000 celkově (Classic) / 64,500 (Expert)",
-        drops: "Hallowed Bar, Soul of Sight, Mechanical Wheel Piece (Expert)",
-        notes: "Dvě mechanické oči: Retinazer (střílí lasery) a Spazmatism (střílí zelené plameny)."
+        summon: "Mechanical Eye (3 Lens + 5 Copper/Tin + 6 Soul of Light at Mythril Altar)",
+        hpClassic: 43000,
+        hpExpert: 64500,
+        hpMaster: 82237,
+        drops: ["Hallowed Bars", "Soul of Sight"],
+        expertDrops: ["Mechanical Wheel Piece (Expert)", "Twins Relic (Master)", "Pair of Eyes Pet (Master)"],
+        notes: "Two mechanical eyes: Retinazer (fires lasers, turns into mechanical laser cannon) and Spazmatism (fires cursed flames, turns into flamethrower mouth). Focus on Spazmatism first!"
       },
       {
+        id: "the-destroyer",
         name: "The Destroyer",
         stage: "Hardmode",
-        image: getWikiImg("The_Destroyer.gif"),
+        progressionOrder: 11,
+        symbol: "DES",
+        theme: "purple",
         biome: "Surface (Night)",
-        summon: "Mechanical Worm (6 Rotten Chunk/Vertebrae + 5 Iron/Lead + 6 Soul of Night)",
-        hp: "80,000 (Classic) / 120,000 (Expert)",
-        drops: "Hallowed Bar, Soul of Might, Mechanical Wagon Piece (Expert)",
-        notes: "Obří mechanický červ. Při poškození částí vypouští útočné sondy."
+        summon: "Mechanical Worm (6 Rotten Chunks/Vertebrae + 5 Iron/Lead + 6 Soul of Night)",
+        hpClassic: 80000,
+        hpExpert: 120000,
+        hpMaster: 153000,
+        drops: ["Hallowed Bars", "Soul of Might"],
+        expertDrops: ["Mechanical Wagon Piece (Expert)", "Destroyer Relic (Master)", "Deactivated Probe Pet (Master)"],
+        notes: "Colossal mechanical worm with 80k+ HP. Releasing probes when hit. High piercers like Daedalus Stormbow with Holy Arrows or Nimbus Rod demolish its segments."
       },
       {
+        id: "skeletron-prime",
         name: "Skeletron Prime",
         stage: "Hardmode",
-        image: getWikiImg("Skeletron_Prime.gif"),
+        progressionOrder: 12,
+        symbol: "SMP",
+        theme: "purple",
         biome: "Surface (Night)",
-        summon: "Mechanical Skull (30 Bone + 5 Iron/Lead + 3 Soul of Light + 3 Soul of Night)",
-        hp: "28,000 (Classic) / 42,000 (Expert)",
-        drops: "Hallowed Bar, Soul of Fright, Mechanical Battery Piece (Expert)",
-        notes: "Má 4 mechanické paže. Zničte nejprve nejnebezpečnější zbraně."
+        summon: "Mechanical Skull (30 Bones + 5 Iron/Lead + 3 Soul of Light + 3 Soul of Night)",
+        hpClassic: 28000,
+        hpExpert: 42000,
+        hpMaster: 53550,
+        drops: ["Hallowed Bars", "Soul of Fright"],
+        expertDrops: ["Mechanical Battery Piece (Expert)", "Prime Relic (Master)", "Robotic Skull Pet (Master)"],
+        notes: "Equipped with 4 lethal arms (Cannon, Saw, Vice, Laser). Destroy Laser and Vice arms first to drastically reduce incoming chaos."
       },
       {
+        id: "plantera",
         name: "Plantera",
         stage: "Hardmode",
-        image: getWikiImg("Plantera.gif"),
+        progressionOrder: 13,
+        symbol: "PLN",
+        theme: "purple",
         biome: "Underground Jungle",
-        summon: "Zničte Plantera's Bulb po poražení všech 3 Mechanical bossů",
-        hp: "30,000 (Classic) / 42,000 (Expert)",
-        drops: "Temple Key, Grenade Launcher, Spore Sac (Expert)",
-        notes: "Vyžaduje velkou vykopanou arénu v džungli. Na povrchu extrémně zsilní."
+        summon: "Destroy Plantera's Bulb with Pickaxe after defeating all 3 Mechanical Bosses",
+        hpClassic: 30000,
+        hpExpert: 42000,
+        hpMaster: 53550,
+        drops: ["Temple Key (Unlocks Jungle Temple)", "Grenade Launcher", "Venus Magnum", "Nettle Burst", "Seedler"],
+        expertDrops: ["Spore Sac (Automatic Spore Mines)", "Plantera Relic (Master)", "Plantera Seedling Pet (Master)"],
+        notes: "Requires a spacious hollowed-out arena with teleporters or a large loop track in the Jungle. DO NOT bring to the surface or she enrages!"
       },
       {
+        id: "golem",
         name: "Golem",
         stage: "Hardmode",
-        image: getWikiImg("Golem.gif"),
+        progressionOrder: 14,
+        symbol: "GOL",
+        theme: "purple",
         biome: "Jungle Temple",
-        summon: "Vložte Lihzahrd Power Cell do Lihzahrd Altaru",
-        hp: "60,000 (Classic) / 90,000 (Expert)",
-        drops: "Picksaw, Stynger, Sun Stone, Shiny Stone (Expert)",
-        notes: "Bojuje se s ním uvnitř chrámu v džungli."
+        summon: "Insert Lihzahrd Power Cell into Lihzahrd Altar inside the Temple",
+        hpClassic: 60000,
+        hpExpert: 90000,
+        hpMaster: 114750,
+        drops: ["Picksaw", "Stynger", "Sun Stone", "Eye of the Golem", "Possessed Hatchet"],
+        expertDrops: ["Shiny Stone (Rapid Regen Standstill)", "Golem Relic (Master)", "Toy Golem Pet (Master)"],
+        notes: "Fought inside the Lihzahrd Temple chamber. Disarm floor traps beforehand. Phase 2 detaches head to float and shoot lasers while body leaps."
       },
       {
+        id: "empress-of-light",
         name: "Empress of Light",
         stage: "Hardmode",
-        image: getWikiImg("Empress_of_Light.gif"),
-        biome: "The Hallow (Night / Day)",
-        summon: "Zabijte Prismatic Lacewing v biomu Hallow",
-        hp: "70,000 (Classic) / 98,000 (Expert)",
-        drops: "Terraprism (při zabití ve dne), Eventide, Soaring Insignia (Expert)",
-        notes: "Pokud s ní bojujete přes den, jakýkoliv její zásah vás okamžitě zabije."
+        progressionOrder: 15,
+        symbol: "EOL",
+        theme: "purple",
+        biome: "The Hallow",
+        summon: "Kill Prismatic Lacewing butterfly in the Hallow (7:30 PM - 12:00 AM)",
+        hpClassic: 70000,
+        hpExpert: 98000,
+        hpMaster: 124950,
+        drops: ["Eventide", "Empress Wings", "Nightglow", "Starlight", "Kaleidoscope"],
+        expertDrops: ["Soaring Insignia (Infinite Flight!)", "Terraprism (100% Day Kill)", "EOL Relic (Master)"],
+        notes: "Bullet-hell boss with beautiful attack patterns. CAUTION: Fighting her during Daytime turns all her attacks into instant 1-hit kills (99,999 damage)!"
       },
       {
+        id: "duke-fishron",
         name: "Duke Fishron",
         stage: "Hardmode",
-        image: getWikiImg("Duke_Fishron.gif"),
+        progressionOrder: 16,
+        symbol: "DF",
+        theme: "purple",
         biome: "Ocean",
-        summon: "Chytat ryby v oceánu s návnadou Truffle Worm",
-        hp: "60,000 (Classic) / 78,000 (Expert)",
-        drops: "Tsunami, Flairon, Razorblade Typhoon, Shrimpy Truffle (Expert)",
-        notes: "Extrémně rychlý boss, je nutná vysoká mobilita."
+        summon: "Fish in the Ocean using Truffle Worm (caught in Underground Glowing Mushroom biome)",
+        hpClassic: 60000,
+        hpExpert: 78000,
+        hpMaster: 99450,
+        drops: ["Tsunami Bow", "Flairon", "Razorblade Typhoon", "Bubble Gun", "Tempest Staff"],
+        expertDrops: ["Shrimpy Truffle (Cute Fishron Mount)", "Duke Relic (Master)", "Porkron Pet (Master)"],
+        notes: "Extremely fast high-tier boss. Charges rapidly and creates Sharknados. In Expert Phase 3, screen darkens and he teleports rapidly."
       },
       {
+        id: "lunatic-cultist",
         name: "Lunatic Cultist",
         stage: "Hardmode",
-        image: getWikiImg("Lunatic_Cultist.gif"),
+        progressionOrder: 17,
+        symbol: "LC",
+        theme: "purple",
         biome: "Dungeon Entrance",
-        summon: "Zabijte 4 kultisty u vchodu do Dungeonu po poražení Golema",
-        hp: "32,000 (Classic) / 48,000 (Expert)",
-        drops: "Ancient Manipulator",
-        notes: "Jeho poražením odstartujete Celestial Events (vesmírné pilíře)."
+        summon: "Defeat 4 Cultist devotees outside Dungeon entrance after Golem is slain",
+        hpClassic: 32000,
+        hpExpert: 48000,
+        hpMaster: 61200,
+        drops: ["Ancient Manipulator (Crafting Station for Celestial endgame items)"],
+        expertDrops: ["Lunatic Cultist Relic (Master)", "Phantom Dragon Pet (Master)"],
+        notes: "Small wizard boss casting ice, lightning, and fire spells. During ritual clone phase, attack ONLY the real cultist to avoid summoning a Phantasm Dragon."
       },
       {
+        id: "moon-lord",
         name: "Moon Lord",
         stage: "Hardmode",
-        image: getWikiImg("Moon_Lord.gif"),
-        biome: "Kdekoliv",
-        summon: "Zničte všechny 4 Celestial Pillars nebo použijte Celestial Sigil",
-        hp: "145,000 celkově (Classic) / 217,500 (Expert)",
-        drops: "Meowmere, Star Wrath, Luminite Ore, Portal Gun, Gravity Globe (Expert)",
-        notes: "Finální boss hry Terraria."
+        progressionOrder: 18,
+        symbol: "ML",
+        theme: "purple",
+        biome: "Anywhere",
+        summon: "Destroy all 4 Celestial Pillars (Solar, Vortex, Nebula, Stardust) or use Celestial Sigil",
+        hpClassic: 145000,
+        hpExpert: 217500,
+        hpMaster: 277275,
+        drops: ["Meowmere", "Star Wrath", "Terrarian", "S.D.M.G.", "Last Prism", "Luminite Ore"],
+        expertDrops: ["Gravity Globe", "Portal Gun", "Suspicious Tentacle Pet", "ML Relic (Master)"],
+        notes: "The Final Boss of Terraria! Must destroy socketed eyes on both hands and head first, then destroy the exposed True Eye of Cthulhu core in his chest."
       },
 
       // --- EVENT BOSSES ---
       {
+        id: "dark-mage",
         name: "Dark Mage",
         stage: "Event Boss",
-        image: getWikiImg("Dark_Mage.gif"),
-        biome: "Old One's Army",
-        summon: "Eternia Crystal Stand + Eternia Crystal (Pre-Hardmode Tier 1)",
-        hp: "800 - 3,200",
-        drops: "Defender Medals, War Table, Dragon Egg",
-        notes: "Vyvolává kostlivce a léčí okolní jednotky."
+        progressionOrder: 19,
+        symbol: "DM",
+        theme: "amber",
+        biome: "Old One's Army Event",
+        summon: "Triggered during Tier 1 / Tier 3 Old One's Army (Eternia Crystal Stand)",
+        hpClassic: 800,
+        hpExpert: 1200,
+        hpMaster: 1530,
+        drops: ["War Table", "Dragon Egg", "Defender Medals"],
+        expertDrops: ["Dark Mage Relic (Master)", "Gato Egg Pet (Master)"],
+        notes: "Mini-boss in Dungeon Defenders event. Summons skeletons and heals nearby enemy waves."
       },
       {
+        id: "ogre",
         name: "Ogre",
         stage: "Event Boss",
-        image: getWikiImg("Ogre.gif"),
-        biome: "Old One's Army",
-        summon: "Eternia Crystal Stand (Tier 2 po poražení 1 Mech Bosse)",
-        hp: "10,000 - 24,000",
-        drops: "Defender Medals, Brand of the Red Dragon, Tome of Infinite Wisdom",
-        notes: "Pomalý miniboss udělující vysoké plošné poškození."
+        progressionOrder: 20,
+        symbol: "OGR",
+        theme: "amber",
+        biome: "Old One's Army Event",
+        summon: "Triggered during Tier 2 / Tier 3 Old One's Army (Post-1 Mech Boss)",
+        hpClassic: 10000,
+        hpExpert: 15000,
+        hpMaster: 19125,
+        drops: ["Brand of the Red Dragon", "Tome of Infinite Wisdom", "Phantom Phoenix"],
+        expertDrops: ["Ogre Relic (Master)", "Creeper Egg Pet (Master)"],
+        notes: "Heavy club wielder that hurls snot globs to slow players down. Keep distance with aerial mobility."
       },
       {
+        id: "betsy",
         name: "Betsy",
         stage: "Event Boss",
-        image: getWikiImg("Betsy.gif"),
-        biome: "Old One's Army",
-        summon: "Eternia Crystal Stand (Tier 3 po poražení Golema)",
-        hp: "50,000 - 75,000",
-        drops: "Betsy's Wrath, Aerial Bane, Sky Dragon's Fury",
-        notes: "Létající dračí boss s dýcháním ohně."
+        progressionOrder: 21,
+        symbol: "BET",
+        theme: "amber",
+        biome: "Old One's Army Event",
+        summon: "Final wave 7 boss of Tier 3 Old One's Army (Post-Golem)",
+        hpClassic: 50000,
+        hpExpert: 75000,
+        hpMaster: 95625,
+        drops: ["Betsy's Wrath (Debuff Book)", "Aerial Bane", "Sky Dragon's Fury", "Betsy's Wings"],
+        expertDrops: ["Betsy Relic (Master)", "Dragon Egg (Master)"],
+        notes: "Wyvern-like boss that dives, breathes fire walls, and summons Etherian Wyverns."
       },
       {
+        id: "flying-dutchman",
         name: "Flying Dutchman",
         stage: "Event Boss",
-        image: getWikiImg("Flying_Dutchman.gif"),
-        biome: "Pirate Invasion",
-        summon: "Pirate Map nebo náhodná událost Pirate Invasion",
-        hp: "8,000 (4 děla)",
-        drops: "Coin Gun, Discount Card, Lucky Coin, Flying Dragon",
-        notes: "Létající pirátská loď. Je potřeba zničit všechna 4 děla na trupu."
+        progressionOrder: 22,
+        symbol: "FD",
+        theme: "amber",
+        biome: "Pirate Invasion Event",
+        summon: "Spawns randomly during Pirate Invasion event in Hardmode",
+        hpClassic: 8000,
+        hpExpert: 12000,
+        hpMaster: 15300,
+        drops: ["Coin Gun", "Discount Card", "Lucky Coin", "Pirate Staff", "Cutlass"],
+        expertDrops: ["Flying Dutchman Relic (Master)", "Black Spot Mount (Master)"],
+        notes: "Lifting pirate ship. Must destroy all 4 cannons on its hull while dodging endless pirate hordes."
       },
       {
+        id: "mourning-wood",
         name: "Mourning Wood",
         stage: "Event Boss",
-        image: getWikiImg("Mourning_Wood.gif"),
-        biome: "Pumpkin Moon",
-        summon: "Pumpkin Moon Medallion v noci",
-        hp: "12,000 - 19,200",
-        drops: "Spooky Wood, Necromantic Scroll, Witch's Broom",
-        notes: "Střílí hořící projektily skrz pevné bloky."
+        progressionOrder: 23,
+        symbol: "MW",
+        theme: "amber",
+        biome: "Pumpkin Moon Event",
+        summon: "Pumpkin Moon Medallion used at Night (Hardmode)",
+        hpClassic: 12000,
+        hpExpert: 18000,
+        hpMaster: 22950,
+        drops: ["Spooky Wood", "Necromantic Scroll", "Spooky Hook", "Witch's Broom Mount"],
+        expertDrops: ["Mourning Wood Relic (Master)"],
+        notes: "Spooky tree mini-boss that shoots flaming projectiles through walls. Stay elevated!"
       },
       {
+        id: "pumpking",
         name: "Pumpking",
         stage: "Event Boss",
-        image: getWikiImg("Pumpking.gif"),
-        biome: "Pumpkin Moon",
-        summon: "Pumpkin Moon Medallion v noci (vyšší vlny)",
-        hp: "22,000 - 33,000",
-        drops: "The Horseman's Blade, Bat Scepter, Black Fairy Dust",
-        notes: "Hlavní boss události Pumpkin Moon."
+        progressionOrder: 24,
+        symbol: "PMK",
+        theme: "amber",
+        biome: "Pumpkin Moon Event",
+        summon: "Pumpkin Moon Medallion used at Night (Higher event waves)",
+        hpClassic: 22000,
+        hpExpert: 33000,
+        hpMaster: 42075,
+        drops: ["The Horseman's Blade", "Bat Scepter", "Raven Staff", "Candy Corn Rifle"],
+        expertDrops: ["Pumpking Relic (Master)"],
+        notes: "Primary boss of Pumpkin Moon. Swings scythe blades and changes face modes (Attack, Magic, Flame)."
       },
       {
+        id: "everscream",
         name: "Everscream",
         stage: "Event Boss",
-        image: getWikiImg("Everscream.gif"),
-        biome: "Frost Moon",
-        summon: "Naughty Present v noci",
-        hp: "13,000 - 20,800",
-        drops: "Razorpine, Christmas Tree Sword, Festive Wings",
-        notes: "Střílí jehličí a výbušné vánoční ozdoby."
+        progressionOrder: 25,
+        symbol: "EVS",
+        theme: "amber",
+        biome: "Frost Moon Event",
+        summon: "Naughty Present used at Night (Hardmode)",
+        hpClassic: 13000,
+        hpExpert: 19500,
+        hpMaster: 24862,
+        drops: ["Razorpine", "Christmas Tree Sword", "Festive Wings"],
+        expertDrops: ["Everscream Relic (Master)"],
+        notes: "Fires rapid pine needle sprays and bouncing Christmas ornament grenades."
       },
       {
+        id: "santa-nk1",
         name: "Santa-NK1",
         stage: "Event Boss",
-        image: getWikiImg("Santa-NK1.gif"),
-        biome: "Frost Moon",
-        summon: "Naughty Present v noci (pokročilé vlny)",
-        hp: "18,000 - 28,800",
-        drops: "Elf Melter, Chain Gun",
-        notes: "Mechanický Santa tank s kulometem a raketometem."
+        progressionOrder: 26,
+        symbol: "SNK",
+        theme: "amber",
+        biome: "Frost Moon Event",
+        summon: "Naughty Present used at Night (Mid-Tier waves)",
+        hpClassic: 18000,
+        hpExpert: 27000,
+        hpMaster: 34425,
+        drops: ["Elf Melter", "Chain Gun"],
+        expertDrops: ["Santa-NK1 Relic (Master)"],
+        notes: "Cybernetic Santa equipped with a high-rate minigun, rocket launcher, and spiked presents."
       },
       {
+        id: "ice-queen",
         name: "Ice Queen",
         stage: "Event Boss",
-        image: getWikiImg("Ice_Queen.gif"),
-        biome: "Frost Moon",
-        summon: "Naughty Present v noci (nejvyšší vlny)",
-        hp: "34,000 - 54,400",
-        drops: "Blizzard Staff, Snowman Cannon, Baby Grinch's Mischief Whistle",
-        notes: "Rychle létající boss vrhající ledové vlny."
+        progressionOrder: 27,
+        symbol: "IQ",
+        theme: "amber",
+        biome: "Frost Moon Event",
+        summon: "Naughty Present used at Night (Late-Tier waves)",
+        hpClassic: 34000,
+        hpExpert: 51000,
+        hpMaster: 65025,
+        drops: ["Blizzard Staff", "Snowman Cannon", "North Pole", "Baby Grinch Whistle"],
+        expertDrops: ["Ice Queen Relic (Master)"],
+        notes: "Fastest Frost Moon boss. Spins rapidly unleashing ice waves and frost shards."
       },
       {
+        id: "martian-saucer",
         name: "Martian Saucer",
         stage: "Event Boss",
-        image: getWikiImg("Martian_Saucer.gif"),
-        biome: "Martian Madness",
-        summon: "Být odhalen Martian Probe na povrchu/vesmíru po Golemovi",
-        hp: "27,000 - 40,500",
-        drops: "Influx Waver, Cosmic Car Key, Laser Drill, Xenopopper",
-        notes: "UFO miniboss se smrtícím laserovým paprskem (Deathray)."
+        progressionOrder: 28,
+        symbol: "MS",
+        theme: "amber",
+        biome: "Martian Madness Event",
+        summon: "Get detected by Martian Probe in Space/Surface after defeating Golem",
+        hpClassic: 27000,
+        hpExpert: 40500,
+        hpMaster: 51637,
+        drops: ["Influx Waver", "Cosmic Car Key (UFO Infinite Mount)", "Laser Drill", "Xenopopper", "Electrosphere Launcher"],
+        expertDrops: ["Martian Saucer Relic (Master)"],
+        notes: "UFO mini-boss. In Phase 2, fires an intense deathray directly beneath itself. Stay mobile diagonally!"
       }
     ];
 
-    const bossList = document.getElementById('bossList');
-    const searchInput = document.getElementById('searchInput');
-    const stageFilter = document.getElementById('stageFilter');
+    const STORAGE_KEY = 'terraria_boss_guide_defeated_v2';
+    
+    // Load defeated IDs from localStorage
+    function getDefeatedBosses() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error('Error reading localStorage:', e);
+        return [];
+      }
+    }
 
-    function toggleBoss(index) {
-      const details = document.getElementById(`details-${index}`);
-      const chevron = document.getElementById(`chevron-${index}`);
-      details.classList.toggle('hidden');
-      chevron.classList.toggle('rotate-180');
+    // Save defeated IDs to localStorage
+    function setDefeatedBosses(defeatedArray) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(defeatedArray));
+      } catch (e) {
+        console.error('Error writing localStorage:', e);
+      }
+    }
+
+    let defeatedBossIds = getDefeatedBosses();
+
+    function updateProgressDashboard() {
+      const totalCount = bosses.length;
+      const defeatedCount = defeatedBossIds.length;
+      const overallPercent = Math.round((defeatedCount / totalCount) * 100);
+
+      document.getElementById('overallPercentage').textContent = `${overallPercent}%`;
+      document.getElementById('overallBar').style.width = `${overallPercent}%`;
+      document.getElementById('overallCounter').textContent = `${defeatedCount} / ${totalCount} Defeated`;
+      document.getElementById('overallRemaining').textContent = `${totalCount - defeatedCount} Remaining`;
+
+      // Category counts
+      const preHmTotal = bosses.filter(b => b.stage === 'Pre-Hardmode');
+      const preHmDefeated = preHmTotal.filter(b => defeatedBossIds.includes(b.id));
+      document.getElementById('preHmCount').textContent = `${preHmDefeated.length}/${preHmTotal.length}`;
+      document.getElementById('preHmBar').style.width = `${Math.round((preHmDefeated.length / preHmTotal.length) * 100)}%`;
+
+      const hmTotal = bosses.filter(b => b.stage === 'Hardmode');
+      const hmDefeated = hmTotal.filter(b => defeatedBossIds.includes(b.id));
+      document.getElementById('hmCount').textContent = `${hmDefeated.length}/${hmTotal.length}`;
+      document.getElementById('hmBar').style.width = `${Math.round((hmDefeated.length / hmTotal.length) * 100)}%`;
+
+      const eventTotal = bosses.filter(b => b.stage === 'Event Boss');
+      const eventDefeated = eventTotal.filter(b => defeatedBossIds.includes(b.id));
+      document.getElementById('eventCount').textContent = `${eventDefeated.length}/${eventTotal.length}`;
+      document.getElementById('eventBar').style.width = `${Math.round((eventDefeated.length / eventTotal.length) * 100)}%`;
+    }
+
+    function toggleDefeated(bossId) {
+      if (defeatedBossIds.includes(bossId)) {
+        defeatedBossIds = defeatedBossIds.filter(id => id !== bossId);
+      } else {
+        defeatedBossIds.push(bossId);
+      }
+      setDefeatedBosses(defeatedBossIds);
+      updateProgressDashboard();
+      renderBosses();
+    }
+
+    function toggleAccordion(bossId) {
+      const details = document.getElementById(`details-${bossId}`);
+      const chevron = document.getElementById(`chevron-${bossId}`);
+      if (details && chevron) {
+        details.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180');
+      }
+    }
+
+    function getStageBadgeClass(stage) {
+      switch(stage) {
+        case 'Pre-Hardmode':
+          return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        case 'Hardmode':
+          return 'bg-purple-500/10 text-purple-400 border-purple-500/30';
+        case 'Event Boss':
+          return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+        default:
+          return 'bg-slate-800 text-slate-300 border-slate-700';
+      }
+    }
+
+    function getSymbolBadgeStyle(theme) {
+      switch(theme) {
+        case 'emerald':
+          return 'bg-gradient-to-br from-emerald-950 to-slate-900 border-emerald-500/40 text-emerald-400 shadow-emerald-950/50';
+        case 'purple':
+          return 'bg-gradient-to-br from-purple-950 to-slate-900 border-purple-500/40 text-purple-400 shadow-purple-950/50';
+        case 'amber':
+          return 'bg-gradient-to-br from-amber-950 to-slate-900 border-amber-500/40 text-amber-400 shadow-amber-950/50';
+        default:
+          return 'bg-slate-800 border-slate-700 text-slate-300';
+      }
     }
 
     function renderBosses() {
-      const search = searchInput.value.toLowerCase();
-      const stage = stageFilter.value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const stage = document.getElementById('stageFilter').value;
+      const status = document.getElementById('statusFilter').value;
+      const sort = document.getElementById('sortOption').value;
 
-      const filtered = bosses.filter(b => {
+      // 1. Filter
+      let filtered = bosses.filter(b => {
         const matchesSearch = b.name.toLowerCase().includes(search) || 
                               b.summon.toLowerCase().includes(search) || 
-                              b.biome.toLowerCase().includes(search);
+                              b.biome.toLowerCase().includes(search) ||
+                              b.drops.some(d => d.toLowerCase().includes(search));
+        
         const matchesStage = stage === 'all' || b.stage === stage;
-        return matchesSearch && matchesStage;
+        
+        const isDefeated = defeatedBossIds.includes(b.id);
+        const matchesStatus = status === 'all' || 
+                             (status === 'defeated' && isDefeated) || 
+                             (status === 'remaining' && !isDefeated);
+
+        return matchesSearch && matchesStage && matchesStatus;
       });
 
+      // 2. Sort
+      filtered.sort((a, b) => {
+        if (sort === 'name-asc') return a.name.localeCompare(b.name);
+        if (sort === 'name-desc') return b.name.localeCompare(a.name);
+        if (sort === 'hp-asc') return a.hpClassic - b.hpClassic;
+        if (sort === 'hp-desc') return b.hpClassic - a.hpClassic;
+        return a.progressionOrder - b.progressionOrder; // Default progression
+      });
+
+      const bossListContainer = document.getElementById('bossList');
+
       if (filtered.length === 0) {
-        bossList.innerHTML = `<p class="text-center text-gray-400 py-8">Žádný boss neodpovídá vyhledávání.</p>`;
+        bossListContainer.innerHTML = `
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center space-y-3">
+            <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-500 flex items-center justify-center mx-auto">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </div>
+            <p class="text-sm font-semibold text-slate-300">No bosses matched your filters</p>
+            <p class="text-xs text-slate-500">Try adjusting your search terms, stage, or defeat status filter.</p>
+          </div>
+        `;
         return;
       }
 
-      bossList.innerHTML = filtered.map((b, index) => `
-        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden shadow-md transition hover:border-gray-600">
-          <button onclick="toggleBoss(${index})" class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-750 transition focus:outline-none gap-3">
-            <div class="truncate">
-              <h2 class="text-lg sm:text-xl font-bold text-green-400 truncate">${b.name}</h2>
-              <span class="text-xs text-gray-400 font-medium truncate block">📍 ${b.biome}</span>
-            </div>
-            <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <span class="text-xs px-2.5 py-1 bg-gray-700 text-gray-300 rounded-full font-semibold whitespace-nowrap">${b.stage}</span>
-              <svg id="chevron-${index}" class="w-5 h-5 text-gray-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </div>
-          </button>
+      bossListContainer.innerHTML = filtered.map(b => {
+        const isDefeated = defeatedBossIds.includes(b.id);
+        const stageBadgeClass = getStageBadgeClass(b.stage);
+        const symbolStyle = getSymbolBadgeStyle(b.theme);
 
-          <div id="details-${index}" class="hidden p-4 pt-0 border-t border-gray-700/50 mt-1">
-            <!-- Obrázek s pravidlem referrerpolicy="no-referrer" -->
-            <div class="flex justify-center my-3 bg-gray-900/80 p-4 rounded-lg border border-gray-800 min-h-[120px] items-center">
-              <img src="${b.image}" 
-                   alt="${b.name}" 
-                   referrerpolicy="no-referrer"
-                   class="max-h-36 max-w-full object-contain" 
-                   style="image-rendering: pixelated;" 
-                   loading="lazy"
-                   onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-center text-gray-500 py-2\'><span class=\'text-3xl\'>👾</span><br><span class=\'text-xs\'>Obrázek se nepodařilo načíst</span></div>';">
+        return `
+          <div class="bg-slate-900 border ${isDefeated ? 'border-emerald-500/30 bg-slate-900/80' : 'border-slate-800'} rounded-xl overflow-hidden transition-all shadow-md hover:border-slate-700">
+            
+            <!-- Card Header Bar -->
+            <div class="p-3.5 sm:p-4 flex items-center justify-between gap-3 sm:gap-4 select-none">
+              
+              <!-- Checkbox & Name Block -->
+              <div class="flex items-center gap-3 min-w-0 flex-1">
+                
+                <!-- Custom Interactive Checkbox -->
+                <label class="relative flex items-center justify-center cursor-pointer p-1" onclick="event.stopPropagation()">
+                  <input type="checkbox" ${isDefeated ? 'checked' : ''} onchange="toggleDefeated('${b.id}')" class="custom-checkbox sr-only">
+                  <div class="w-6 h-6 rounded-lg border-2 border-slate-600 bg-slate-950 flex items-center justify-center transition shadow-inner">
+                    <svg class="w-4 h-4 text-slate-950 font-bold hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                    </svg>
+                  </div>
+                </label>
+
+                <!-- Symbol Avatar -->
+                <div class="w-9 h-9 rounded-lg border flex items-center justify-center text-xs font-black font-mono shadow-md ${symbolStyle} flex-shrink-0">
+                  ${b.symbol}
+                </div>
+
+                <!-- Boss Title & Biome -->
+                <div class="min-w-0 flex-1 cursor-pointer" onclick="toggleAccordion('${b.id}')">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h3 class="text-base font-bold ${isDefeated ? 'line-through text-slate-400' : 'text-slate-100'} truncate">
+                      ${b.name}
+                    </h3>
+                    <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md border ${stageBadgeClass} whitespace-nowrap">
+                      ${b.stage}
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-400 font-medium truncate flex items-center gap-1 mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-slate-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    ${b.biome}
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Quick Info & Accordion Toggle Button -->
+              <div class="flex items-center gap-3 flex-shrink-0">
+                <div class="hidden sm:flex flex-col items-end font-mono text-xs">
+                  <span class="text-slate-400">Classic HP</span>
+                  <span class="font-bold text-slate-200">${b.hpClassic.toLocaleString()}</span>
+                </div>
+
+                <button onclick="toggleAccordion('${b.id}')" class="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition">
+                  <svg id="chevron-${b.id}" class="w-4 h-4 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+              </div>
+
             </div>
 
-            <div class="bg-gray-900 p-3 rounded-lg mb-3 border border-gray-800">
-              <p class="text-sm text-yellow-400 font-semibold mb-1">🔮 Jak vyvolat:</p>
-              <p class="text-xs text-gray-300 leading-relaxed">${b.summon}</p>
+            <!-- Accordion Details (Hidden by default) -->
+            <div id="details-${b.id}" class="hidden border-t border-slate-800/80 bg-slate-950/60 p-4 sm:p-5 space-y-4 text-xs">
+              
+              <!-- Health Breakdown Grid -->
+              <div class="grid grid-cols-3 gap-2 text-center bg-slate-900 border border-slate-800 rounded-xl p-3">
+                <div>
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Classic HP</span>
+                  <span class="text-sm font-black font-mono text-slate-200 mt-0.5 block">${b.hpClassic.toLocaleString()}</span>
+                </div>
+                <div class="border-x border-slate-800">
+                  <span class="text-[10px] font-bold text-amber-400 uppercase tracking-wider block">Expert HP</span>
+                  <span class="text-sm font-black font-mono text-amber-300 mt-0.5 block">${b.hpExpert.toLocaleString()}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] font-bold text-rose-400 uppercase tracking-wider block">Master HP</span>
+                  <span class="text-sm font-black font-mono text-rose-300 mt-0.5 block">${b.hpMaster.toLocaleString()}</span>
+                </div>
+              </div>
+
+              <!-- Summoning Requirements -->
+              <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-1">
+                <div class="flex items-center gap-1.5 text-amber-400 font-bold text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  <span>Summon Requirement:</span>
+                </div>
+                <p class="text-slate-300 leading-relaxed pl-5">${b.summon}</p>
+              </div>
+
+              <!-- Key Drops & Expert Exclusives -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                
+                <!-- Key Drops -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
+                  <div class="flex items-center gap-1.5 text-teal-400 font-bold text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                    <span>Key Loot & Drops:</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 pl-5">
+                    ${b.drops.map(d => `<span class="bg-slate-800 text-slate-200 border border-slate-700/80 px-2 py-0.5 rounded-md text-[11px] font-medium">${d}</span>`).join('')}
+                  </div>
+                </div>
+
+                <!-- Expert/Master Exclusives -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
+                  <div class="flex items-center gap-1.5 text-purple-400 font-bold text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                    <span>Expert & Master Exclusives:</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 pl-5">
+                    ${b.expertDrops.map(ed => `<span class="bg-purple-950/60 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-md text-[11px] font-medium">${ed}</span>`).join('')}
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Tactical Strategy & Notes -->
+              <div class="bg-slate-900/90 border border-slate-800/80 rounded-xl p-3.5 space-y-1">
+                <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-xs">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                  </svg>
+                  <span>Tactical Strategy & Notes:</span>
+                </div>
+                <p class="text-slate-300 leading-relaxed pl-5">${b.notes}</p>
+              </div>
+
             </div>
 
-            <div class="text-xs text-gray-300 space-y-1.5 mb-3">
-              <p>❤️ <strong class="text-gray-200">Životy (HP):</strong> ${b.hp}</p>
-              <p>🎁 <strong class="text-gray-200">Hlavní dropy:</strong> ${b.drops}</p>
-            </div>
-
-            <div class="pt-2 border-t border-gray-700/50">
-              <p class="text-xs italic text-gray-400">💡 ${b.notes}</p>
-            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    searchInput.addEventListener('input', renderBosses);
-    stageFilter.addEventListener('change', renderBosses);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Event Listeners for Filters
+      document.getElementById('searchInput').addEventListener('input', renderBosses);
+      document.getElementById('stageFilter').addEventListener('change', renderBosses);
+      document.getElementById('statusFilter').addEventListener('change', renderBosses);
+      document.getElementById('sortOption').addEventListener('change', renderBosses);
 
-    renderBosses();
+      // Reset Modal logic
+      const resetModal = document.getElementById('resetModal');
+      const resetBtn = document.getElementById('resetBtn');
+      const cancelReset = document.getElementById('cancelReset');
+      const confirmReset = document.getElementById('confirmReset');
+
+      resetBtn.addEventListener('click', () => {
+        resetModal.classList.remove('hidden');
+      });
+
+      cancelReset.addEventListener('click', () => {
+        resetModal.classList.add('hidden');
+      });
+
+      confirmReset.addEventListener('click', () => {
+        defeatedBossIds = [];
+        setDefeatedBosses(defeatedBossIds);
+        updateProgressDashboard();
+        renderBosses();
+        resetModal.classList.add('hidden');
+      });
+
+      // Initial Render
+      updateProgressDashboard();
+      renderBosses();
+    });
   </script>
 </body>
 </html>
