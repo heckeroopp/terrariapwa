@@ -1,0 +1,16 @@
+{
+  "short_name": "TerrariaBosses",
+  "name": "Terraria Boss Guide PWA",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#111827",
+  "theme_color": "#1f2937",
+  "display": "standalone",
+  "orientation": "portrait"
+}
