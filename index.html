@@ -65,12 +65,15 @@
       deferredPrompt = null;
     });
 
+    // Fandom Wiki dynamic image locator
+    const getFandomImg = (filename) => `https://terraria.fandom.com/wiki/Special:FilePath/${filename}`;
+
     const bosses = [
       // --- PRE-HARDMODE ---
       {
         name: "King Slime",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a2/King_Slime.png",
+        image: getFandomImg("King_Slime.png"),
         biome: "Surface / Forest",
         summon: "Slime Crown (20 Gel + Gold/Platinum Crown at Demon/Crimson Altar) or during Slime Rain event",
         hp: "2,000 (Classic) / 2,800 (Expert) / 3,570 (Master)",
@@ -80,7 +83,7 @@
       {
         name: "Eye of Cthulhu",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/18/Eye_of_Cthulhu.png",
+        image: getFandomImg("Eye_of_Cthulhu.png"),
         biome: "Surface (Night)",
         summon: "Suspicious Looking Eye (6 Lenses at Altar) or 33% chance each night if HP > 200 & 3+ NPCs present",
         hp: "2,800 (Classic) / 3,640 (Expert) / 4,641 (Master)",
@@ -90,7 +93,7 @@
       {
         name: "Eater of Worlds",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/1b/Eater_of_Worlds.png",
+        image: getFandomImg("Eater_of_Worlds.png"),
         biome: "The Corruption",
         summon: "Worm Food (30 Vile Powder + 15 Rotten Chunk) or breaking 3 Shadow Orbs",
         hp: "10,050 total (Classic) / 15,120 (Expert)",
@@ -100,7 +103,7 @@
       {
         name: "Brain of Cthulhu",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/7/7b/Brain_of_Cthulhu.png",
+        image: getFandomImg("Brain_of_Cthulhu.png"),
         biome: "The Crimson",
         summon: "Bloody Spine (30 Vicious Powder + 15 Vertebrae) or breaking 3 Crimson Hearts",
         hp: "1,250 (Classic) / 2,125 (Expert)",
@@ -110,7 +113,7 @@
       {
         name: "Queen Bee",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/5/52/Queen_Bee.png",
+        image: getFandomImg("Queen_Bee.png"),
         biome: "Underground Jungle",
         summon: "Abeemination (5 Honeycomb + 1 Stinger + 5 Hive + 1 Bottled Honey) or breaking a Larva inside a Bee Hive",
         hp: "3,400 (Classic) / 4,760 (Expert)",
@@ -120,7 +123,7 @@
       {
         name: "Skeletron",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/5/59/Skeletron.png",
+        image: getFandomImg("Skeletron.png"),
         biome: "Dungeon Entrance",
         summon: "Talk to the Old Man at the Dungeon entrance at Night, or equip Clothier Voodoo Doll",
         hp: "4,400 (Classic) / 8,800 (Expert)",
@@ -130,7 +133,7 @@
       {
         name: "Deerclops",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/8/87/Deerclops.png",
+        image: getFandomImg("Deerclops.png"),
         biome: "Snow Biome (Midnight / Blizzard)",
         summon: "Deer Thing (1 Flinx Fur + 5 Demonite/Crimtane Ore + 1 Lens)",
         hp: "7,000 (Classic) / 11,900 (Expert)",
@@ -140,7 +143,7 @@
       {
         name: "Wall of Flesh",
         stage: "Pre-Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/0/07/Wall_of_Flesh.png",
+        image: getFandomImg("Wall_of_Flesh.png"),
         biome: "Underworld",
         summon: "Throw a Guide Voodoo Doll into lava in the Underworld while the Guide is alive",
         hp: "8,000 (Classic) / 11,200 (Expert)",
@@ -152,7 +155,7 @@
       {
         name: "Queen Slime",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/3/36/Queen_Slime.png",
+        image: getFandomImg("Queen_Slime.png"),
         biome: "The Hallow",
         summon: "Gelatin Crystal (mined in Underground Hallow)",
         hp: "18,000 (Classic) / 28,800 (Expert)",
@@ -162,7 +165,7 @@
       {
         name: "The Twins",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/2/23/The_Twins.png",
+        image: getFandomImg("The_Twins.png"),
         biome: "Surface (Night)",
         summon: "Mechanical Eye (3 Lens + 5 Copper/Tin + 6 Soul of Light)",
         hp: "43,000 combined (Classic) / 64,500 (Expert)",
@@ -172,7 +175,7 @@
       {
         name: "The Destroyer",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/e/e6/The_Destroyer.png",
+        image: getFandomImg("The_Destroyer.png"),
         biome: "Surface (Night)",
         summon: "Mechanical Worm (6 Rotten Chunk/Vertebrae + 5 Iron/Lead + 6 Soul of Night)",
         hp: "80,000 (Classic) / 120,000 (Expert)",
@@ -182,7 +185,7 @@
       {
         name: "Skeletron Prime",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/18/Skeletron_Prime.png",
+        image: getFandomImg("Skeletron_Prime.png"),
         biome: "Surface (Night)",
         summon: "Mechanical Skull (30 Bone + 5 Iron/Lead + 3 Soul of Light + 3 Soul of Night)",
         hp: "28,000 (Classic) / 42,000 (Expert)",
@@ -192,7 +195,7 @@
       {
         name: "Plantera",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a2/Plantera.png",
+        image: getFandomImg("Plantera.png"),
         biome: "Underground Jungle",
         summon: "Break a Plantera's Bulb after defeating all 3 Mechanical Bosses",
         hp: "30,000 (Classic) / 42,000 (Expert)",
@@ -202,7 +205,7 @@
       {
         name: "Golem",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a6/Golem.png",
+        image: getFandomImg("Golem.png"),
         biome: "Jungle Temple",
         summon: "Insert a Lihzahrd Power Cell into a Lihzahrd Altar",
         hp: "60,000 (Classic) / 90,000 (Expert)",
@@ -212,7 +215,7 @@
       {
         name: "Empress of Light",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f6/Empress_of_Light.png",
+        image: getFandomImg("Empress_of_Light.png"),
         biome: "The Hallow (Night / Day)",
         summon: "Kill a Prismatic Lacewing in The Hallow",
         hp: "70,000 (Classic) / 98,000 (Expert)",
@@ -222,7 +225,7 @@
       {
         name: "Duke Fishron",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/c/c5/Duke_Fishron.png",
+        image: getFandomImg("Duke_Fishron.png"),
         biome: "Ocean",
         summon: "Fish in the Ocean using a Truffle Worm as bait",
         hp: "60,000 (Classic) / 78,000 (Expert)",
@@ -232,7 +235,7 @@
       {
         name: "Lunatic Cultist",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/16/Lunatic_Cultist.png",
+        image: getFandomImg("Lunatic_Cultist.png"),
         biome: "Dungeon Entrance",
         summon: "Kill the 4 cultists at the Dungeon Entrance after Golem is defeated",
         hp: "32,000 (Classic) / 48,000 (Expert)",
@@ -242,7 +245,7 @@
       {
         name: "Moon Lord",
         stage: "Hardmode",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d3/Moon_Lord.png",
+        image: getFandomImg("Moon_Lord.png"),
         biome: "Anywhere",
         summon: "Destroy all 4 Celestial Pillars or use a Celestial Sigil",
         hp: "145,000 total (Classic) / 217,500 (Expert)",
@@ -254,7 +257,7 @@
       {
         name: "Dark Mage",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/3/30/Dark_Mage.png",
+        image: getFandomImg("Dark_Mage.png"),
         biome: "Old One's Army",
         summon: "Eternia Crystal Stand + Eternia Crystal (Pre-Hardmode Tier 1)",
         hp: "800 - 3,200",
@@ -264,7 +267,7 @@
       {
         name: "Ogre",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d6/Ogre.png",
+        image: getFandomImg("Ogre.png"),
         biome: "Old One's Army",
         summon: "Eternia Crystal Stand (Tier 2 after defeating 1 Mech Boss)",
         hp: "10,000 - 24,000",
@@ -274,7 +277,7 @@
       {
         name: "Betsy",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/10/Betsy.png",
+        image: getFandomImg("Betsy.png"),
         biome: "Old One's Army",
         summon: "Eternia Crystal Stand (Tier 3 after Golem)",
         hp: "50,000 - 75,000",
@@ -284,7 +287,7 @@
       {
         name: "Flying Dutchman",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a2/Flying_Dutchman.png",
+        image: getFandomImg("Flying_Dutchman.png"),
         biome: "Pirate Invasion",
         summon: "Pirate Map or random Pirate Invasion event in Hardmode",
         hp: "8,000 (4 Cannons)",
@@ -294,7 +297,7 @@
       {
         name: "Mourning Wood",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d4/Mourning_Wood.png",
+        image: getFandomImg("Mourning_Wood.png"),
         biome: "Pumpkin Moon",
         summon: "Pumpkin Moon Medallion at night",
         hp: "12,000 - 19,200",
@@ -304,7 +307,7 @@
       {
         name: "Pumpking",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/a/a8/Pumpking.png",
+        image: getFandomImg("Pumpking.png"),
         biome: "Pumpkin Moon",
         summon: "Pumpkin Moon Medallion at night (higher event waves)",
         hp: "22,000 - 33,000",
@@ -314,7 +317,7 @@
       {
         name: "Everscream",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/d/d3/Everscream.png",
+        image: getFandomImg("Everscream.png"),
         biome: "Frost Moon",
         summon: "Naughty Present at night",
         hp: "13,000 - 20,800",
@@ -324,7 +327,7 @@
       {
         name: "Santa-NK1",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/7/7b/Santa-NK1.png",
+        image: getFandomImg("Santa-NK1.png"),
         biome: "Frost Moon",
         summon: "Naughty Present at night (mid-tier waves)",
         hp: "18,000 - 28,800",
@@ -334,7 +337,7 @@
       {
         name: "Ice Queen",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/1/1d/Ice_Queen.png",
+        image: getFandomImg("Ice_Queen.png"),
         biome: "Frost Moon",
         summon: "Naughty Present at night (advanced waves)",
         hp: "34,000 - 54,400",
@@ -344,7 +347,7 @@
       {
         name: "Martian Saucer",
         stage: "Event Boss",
-        image: "https://static.wikia.nocookie.net/terraria_gamepedia/images/f/f8/Martian_Saucer.png",
+        image: getFandomImg("Martian_Saucer.png"),
         biome: "Martian Madness",
         summon: "Get detected by a Martian Probe on the Surface/Space after Golem",
         hp: "27,000 - 40,500",
@@ -403,10 +406,10 @@
             <div class="flex justify-center my-3 bg-gray-900/80 p-4 rounded-lg border border-gray-800 min-h-[120px] items-center">
               <img src="${b.image}" 
                    alt="${b.name}" 
+                   referrerpolicy="no-referrer"
                    class="max-h-36 max-w-full object-contain" 
                    style="image-rendering: pixelated;" 
-                   loading="lazy" 
-                   onerror="this.onerror=null; this.parentElement.style.display='none';">
+                   loading="lazy">
             </div>
 
             <div class="bg-gray-900 p-3 rounded-lg mb-3 border border-gray-800">
