@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,31 +10,35 @@
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen pb-10">
 
+  <!-- Header -->
   <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-10 px-4 py-4 shadow-lg">
     <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
       <h1 class="text-2xl font-bold text-green-400 flex items-center gap-2">
         🌳 Terraria Boss Guide
       </h1>
       <button id="installBtn" class="hidden bg-green-600 hover:bg-green-500 text-white font-semibold px-4 py-2 rounded-lg shadow transition flex items-center gap-2">
-        📲 Uložit na plochu
+        📲 Save to Home Screen
       </button>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-4 mt-6">
+    <!-- Search & Filters -->
     <div class="flex flex-col md:flex-row gap-4 mb-6">
-      <input type="text" id="searchInput" placeholder="Hledat bosse, biom nebo item pro vyvolání..." 
+      <input type="text" id="searchInput" placeholder="Search boss, biome, or summon item..." 
              class="flex-1 bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
       
       <select id="stageFilter" class="bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-        <option value="all">Všechny kategorie</option>
+        <option value="all">All Categories</option>
         <option value="Pre-Hardmode">Pre-Hardmode</option>
         <option value="Hardmode">Hardmode</option>
         <option value="Event Boss">Event Bosses</option>
       </select>
     </div>
 
-    <div id="bossList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    <!-- Boss List -->
+    <div id="bossList" class="flex flex-col gap-3"></div>
   </main>
 
   <script>
@@ -62,168 +66,173 @@
     });
 
     const bosses = [
+      // --- PRE-HARDMODE ---
       {
         name: "King Slime",
         stage: "Pre-Hardmode",
-        biome: "Povrch / Les",
-        summon: "Slime Crown (20 Gel + Gold/Platinum Crown u Demon/Crimson Altáře) nebo během Slime Rain",
+        biome: "Surface / Forest",
+        summon: "Slime Crown (20 Gel + Gold/Platinum Crown at Demon/Crimson Altar) or during Slime Rain event",
         hp: "2,000 (Classic) / 2,800 (Expert) / 3,570 (Master)",
-        drops: "Solidifier, Slime Hook, Ninja Gear díly, Royal Gel (Expert)",
-        notes: "Jednoduchý úvodní boss. Stavba plošin nad zemí usnadní boj."
+        drops: "Solidifier, Slime Hook, Ninja Gear pieces, Royal Gel (Expert)",
+        notes: "Optional introductory boss. Building an elevated platform makes this fight very easy."
       },
       {
         name: "Eye of Cthulhu",
         stage: "Pre-Hardmode",
-        biome: "Povrch (Noc)",
-        summon: "Suspicious Looking Eye (6 Lens u Altáře) nebo 33% šance v noci (HP > 200, 3+ NPC)",
+        biome: "Surface (Night)",
+        summon: "Suspicious Looking Eye (6 Lenses at Altar) or 33% chance each night if HP > 200 & 3+ NPCs present",
         hp: "2,800 (Classic) / 3,640 (Expert) / 4,641 (Master)",
         drops: "Demonite / Crimtane Ore, Corrupt / Crimson Seeds, Shield of Cthulhu (Expert)",
-        notes: "V 2. fázi odhalí tlamu a zrychlí výpady."
+        notes: "Transforms into Phase 2 below 50% HP, removing its pupil and charging rapidly."
       },
       {
         name: "Eater of Worlds",
         stage: "Pre-Hardmode",
         biome: "The Corruption",
-        summon: "Worm Food (30 Vile Powder + 15 Rotten Chunk) nebo zničení 3 Shadow Orbů",
-        hp: "10,050 celkem (Classic) / 15,120 (Expert)",
+        summon: "Worm Food (30 Vile Powder + 15 Rotten Chunk) or breaking 3 Shadow Orbs",
+        hp: "10,050 total (Classic) / 15,120 (Expert)",
         drops: "Demonite Ore, Shadow Scale, Worm Scarf (Expert)",
-        notes: "Skládá se ze článků. Nejúčinnější jsou prosekávací zbraně (Piercing)."
+        notes: "A multi-segmented worm. Piercing weapons and area-of-effect attacks work best."
       },
       {
         name: "Brain of Cthulhu",
         stage: "Pre-Hardmode",
         biome: "The Crimson",
-        summon: "Bloody Spine (30 Vicious Powder + 15 Vertebrae) nebo zničení 3 Crimson Heartů",
+        summon: "Bloody Spine (30 Vicious Powder + 15 Vertebrae) or breaking 3 Crimson Hearts",
         hp: "1,250 (Classic) / 2,125 (Expert)",
         drops: "Crimtane Ore, Tissue Sample, Brain of Confusion (Expert)",
-        notes: "V 1. fázi zničte Creepery. V 2. fázi vytváří klamné iluze."
+        notes: "Phase 1 requires destroying its orbiting Creepers. Phase 2 creates teleporting illusions."
       },
       {
         name: "Queen Bee",
         stage: "Pre-Hardmode",
         biome: "Underground Jungle",
-        summon: "Abeemination (5 Honeycomb + 1 Stinger + 5 Hive + 1 Bottled Honey) nebo zničení Larvy v úlu",
+        summon: "Abeemination (5 Honeycomb + 1 Stinger + 5 Hive + 1 Bottled Honey) or breaking a Larva inside a Bee Hive",
         hp: "3,400 (Classic) / 4,760 (Expert)",
         drops: "Bee Gun, Bee Keeper, Hive Pack (Expert)",
-        notes: "Střídá rychlé přelety ze stran a vypouštění malých včel."
+        notes: "Alternates between horizontal charging attacks and spawning small bees."
       },
       {
         name: "Skeletron",
         stage: "Pre-Hardmode",
         biome: "Dungeon Entrance",
-        summon: "Mluvení s Old Manem u Dungeonu v noci, nebo Clothier Voodoo Doll",
+        summon: "Talk to the Old Man at the Dungeon entrance at Night, or equip Clothier Voodoo Doll",
         hp: "4,400 (Classic) / 8,800 (Expert)",
         drops: "Skeletron Hand, Book of Skulls, Bone Glove (Expert)",
-        notes: "Poražením získáte bezpečný přístup do celého Dungeonu."
+        notes: "Defeating Skeletron grants safe access to the entire Dungeon."
       },
       {
         name: "Deerclops",
         stage: "Pre-Hardmode",
-        biome: "Snow Biome (Půlnoc / Sněžná bouře)",
+        biome: "Snow Biome (Midnight / Blizzard)",
         summon: "Deer Thing (1 Flinx Fur + 5 Demonite/Crimtane Ore + 1 Lens)",
         hp: "7,000 (Classic) / 11,900 (Expert)",
         drops: "Eye Bone, Lucy the Axe, Bone Helm (Expert)",
-        notes: "Crossover z Don't Starve Together. Imunní vůči zamrznutí."
+        notes: "Don't Starve Together crossover boss. Immune to cold hazards."
       },
       {
         name: "Wall of Flesh",
         stage: "Pre-Hardmode",
         biome: "Underworld",
-        summon: "Vhození Guide Voodoo Doll do lávy v Underworldu",
+        summon: "Throw a Guide Voodoo Doll into lava in the Underworld while the Guide is alive",
         hp: "8,000 (Classic) / 11,200 (Expert)",
         drops: "Pwnhammer, Class Emblem, Demon Heart (Expert)",
-        notes: "Poražením se svět trvale přepne do **Hardmode**."
+        notes: "Defeating this boss permanently transitions your world into **Hardmode**."
       },
+
+      // --- HARDMODE ---
       {
         name: "Queen Slime",
         stage: "Hardmode",
         biome: "The Hallow",
-        summon: "Gelatin Crystal (těží se v Underground Hallow)",
+        summon: "Gelatin Crystal (mined in Underground Hallow)",
         hp: "18,000 (Classic) / 28,800 (Expert)",
         drops: "Crystal Assassin Armor, Gelatinous Pillion, Volatile Gelatin (Expert)",
-        notes: "V druhé fázi získává křídla a útočí z vzduchu."
+        notes: "Grows wings and flies during Phase 2, firing crystal projectiles."
       },
       {
         name: "The Twins",
         stage: "Hardmode",
-        biome: "Povrch (Noc)",
+        biome: "Surface (Night)",
         summon: "Mechanical Eye (3 Lens + 5 Copper/Tin + 6 Soul of Light)",
-        hp: "43,000 dohromady (Classic) / 64,500 (Expert)",
+        hp: "43,000 combined (Classic) / 64,500 (Expert)",
         drops: "Hallowed Bar, Soul of Sight, Mechanical Wheel Piece (Expert)",
-        notes: "Retinazer (lasery) a Spazmatism (plamenomet). Soustřeďte se na jednoho."
+        notes: "Two mechanical eyes: Retinazer (fires lasers) and Spazmatism (fires cursed flames). Focus on one first."
       },
       {
         name: "The Destroyer",
         stage: "Hardmode",
-        biome: "Povrch (Noc)",
+        biome: "Surface (Night)",
         summon: "Mechanical Worm (6 Rotten Chunk/Vertebrae + 5 Iron/Lead + 6 Soul of Night)",
         hp: "80,000 (Classic) / 120,000 (Expert)",
         drops: "Hallowed Bar, Soul of Might, Mechanical Wagon Piece (Expert)",
-        notes: "Mechanický červ. Používejte zbraně prosekávající více článků najednou."
+        notes: "Massive mechanical worm. Releases attack probes when segments take damage."
       },
       {
         name: "Skeletron Prime",
         stage: "Hardmode",
-        biome: "Povrch (Noc)",
+        biome: "Surface (Night)",
         summon: "Mechanical Skull (30 Bone + 5 Iron/Lead + 3 Soul of Light + 3 Soul of Night)",
         hp: "28,000 (Classic) / 42,000 (Expert)",
         drops: "Hallowed Bar, Soul of Fright, Mechanical Battery Piece (Expert)",
-        notes: "Má 4 mechanické paže. Nejdříve zničte nejnebezpečnější paže (Prime Laser/Saw)."
+        notes: "Features 4 mechanical arms. Destroy dangerous arms (Prime Laser/Saw) first."
       },
       {
         name: "Plantera",
         stage: "Hardmode",
         biome: "Underground Jungle",
-        summon: "Zničení Plantera's Bulb po poražení všech 3 Mech Bossů",
+        summon: "Break a Plantera's Bulb after defeating all 3 Mechanical Bosses",
         hp: "30,000 (Classic) / 42,000 (Expert)",
         drops: "Temple Key, Grenade Launcher, Spore Sac (Expert)",
-        notes: "Vyžaduje velkou vykopanou arénu v Džungli."
+        notes: "Requires a large dug-out arena in the Jungle. Enrages if brought to the surface."
       },
       {
         name: "Golem",
         stage: "Hardmode",
         biome: "Jungle Temple",
-        summon: "Lihzahrd Power Cell vložená do Lihzahrd Altaru",
+        summon: "Insert a Lihzahrd Power Cell into a Lihzahrd Altar",
         hp: "60,000 (Classic) / 90,000 (Expert)",
         drops: "Picksaw, Stynger, Sun Stone, Shiny Stone (Expert)",
-        notes: "Nachází se v uzamčeném chrámu. Odpojte pasti v místnosti."
+        notes: "Fought inside the Jungle Temple chamber. Disarm surrounding traps before starting."
       },
       {
         name: "Empress of Light",
         stage: "Hardmode",
-        biome: "The Hallow (Noc / Den)",
-        summon: "Zabití Prismatic Lacewing motýla v Hallow",
+        biome: "The Hallow (Night / Day)",
+        summon: "Kill a Prismatic Lacewing in The Hallow",
         hp: "70,000 (Classic) / 98,000 (Expert)",
-        drops: "Terraprism (při boji ve dne), Eventide, Soaring Insignia (Expert)",
-        notes: "Boj ve dne způsobí instantní zabití jedním zásahem."
+        drops: "Terraprism (if killed during daytime), Eventide, Soaring Insignia (Expert)",
+        notes: "Fighting her during the day will cause her to one-hit kill the player instantly."
       },
       {
         name: "Duke Fishron",
         stage: "Hardmode",
         biome: "Ocean",
-        summon: "Rybáření v Oceánu s Truffle Worm jako návnadou",
+        summon: "Fish in the Ocean using a Truffle Worm as bait",
         hp: "60,000 (Classic) / 78,000 (Expert)",
         drops: "Tsunami, Flairon, Razorblade Typhoon, Shrimpy Truffle (Expert)",
-        notes: "Extrémně rychlý. Vyžaduje křídla a rychlé úhybné manévry."
+        notes: "Extremely fast boss. High mobility (wings/dashes) is essential."
       },
       {
         name: "Lunatic Cultist",
         stage: "Hardmode",
         biome: "Dungeon Entrance",
-        summon: "Zabití 4 kultistů u Dungeonu po poražení Golema",
+        summon: "Kill the 4 cultists at the Dungeon Entrance after Golem is defeated",
         hp: "32,000 (Classic) / 48,000 (Expert)",
         drops: "Ancient Manipulator",
-        notes: "Spustí Celestial Events (vyvolání 4 Pilarů)."
+        notes: "Defeating him initiates the Celestial Events (spawning 4 Celestial Pillars)."
       },
       {
         name: "Moon Lord",
         stage: "Hardmode",
-        biome: "Kdekoliv",
-        summon: "Zničení 4 Celestial Pillars nebo použitím Celestial Sigil",
-        hp: "145,000 celkem (Classic) / 217,500 (Expert)",
+        biome: "Anywhere",
+        summon: "Destroy all 4 Celestial Pillars or use a Celestial Sigil",
+        hp: "145,000 total (Classic) / 217,500 (Expert)",
         drops: "Meowmere, Star Wrath, Luminite Ore, Portal Gun, Gravity Globe (Expert)",
-        notes: "Finální boss hry Terraria."
+        notes: "The final boss of Terraria."
       },
+
+      // --- EVENT BOSSES ---
       {
         name: "Dark Mage",
         stage: "Event Boss",
@@ -231,94 +240,101 @@
         summon: "Eternia Crystal Stand + Eternia Crystal (Pre-Hardmode Tier 1)",
         hp: "800 - 3,200",
         drops: "Defender Medals, War Table, Dragon Egg",
-        notes: "Vyvolává kostlivce a léčí okolní jednotky."
+        notes: "Summons skeletons and heals nearby enemy units during the event."
       },
       {
         name: "Ogre",
         stage: "Event Boss",
         biome: "Old One's Army",
-        summon: "Eternia Crystal Stand (Tier 2 po 1 Mech Bossu)",
+        summon: "Eternia Crystal Stand (Tier 2 after defeating 1 Mech Boss)",
         hp: "10,000 - 24,000",
         drops: "Defender Medals, Brand of the Red Dragon, Tome of Infinite Wisdom",
-        notes: "Pomalý, ale udílí masivní poškození na blízko i dálku."
+        notes: "Slow-moving miniboss that deals heavy melee and ranged splash damage."
       },
       {
         name: "Betsy",
         stage: "Event Boss",
         biome: "Old One's Army",
-        summon: "Eternia Crystal Stand (Tier 3 po Golemovi)",
+        summon: "Eternia Crystal Stand (Tier 3 after Golem)",
         hp: "50,000 - 75,000",
         drops: "Betsy's Wrath, Aerial Bane, Sky Dragon's Fury",
-        notes: "Létající drak, útočí ohnivým dechem v širokém úhlu."
+        notes: "A flying dragon boss with wide-range fire breath and dash attacks."
       },
       {
         name: "Flying Dutchman",
         stage: "Event Boss",
         biome: "Pirate Invasion",
-        summon: "Pirate Map nebo náhodná invaze v Hardmode",
-        hp: "8,000 (4 děla)",
+        summon: "Pirate Map or random Pirate Invasion event in Hardmode",
+        hp: "8,000 (4 Cannons)",
         drops: "Coin Gun, Discount Card, Lucky Coin, Flying Dragon",
-        notes: "Létající pirátská loď spawning piráty. Musíte zničit 4 děla."
+        notes: "Flying pirate ship. Destroy all 4 cannons on its hull to defeat it."
       },
       {
         name: "Mourning Wood",
         stage: "Event Boss",
         biome: "Pumpkin Moon",
-        summon: "Pumpkin Moon Medallion (30 Pumpkin + 5 Ectoplasm + 10 Hallowed Bar) v noci",
+        summon: "Pumpkin Moon Medallion (30 Pumpkin + 5 Ectoplasm + 10 Hallowed Bar) at night",
         hp: "12,000 - 19,200",
         drops: "Spooky Wood, Necromantic Scroll, Witch's Broom",
-        notes: "Střílí hořící projektily skrz bloky."
+        notes: "Shoots flaming projectiles through solid tiles."
       },
       {
         name: "Pumpking",
         stage: "Event Boss",
         biome: "Pumpkin Moon",
-        summon: "Pumpkin Moon Medallion v noci (vyšší vlny)",
+        summon: "Pumpkin Moon Medallion at night (higher event waves)",
         hp: "22,000 - 33,000",
         drops: "The Horseman's Blade, Bat Scepter, Black Fairy Dust",
-        notes: "Hlavní boss Pumpkin Moon eventu. Střídá různé fáze obličeje."
+        notes: "Primary boss of the Pumpkin Moon event. Swaps between different facial modes."
       },
       {
         name: "Everscream",
         stage: "Event Boss",
         biome: "Frost Moon",
-        summon: "Naughty Present (20 Silk + 5 Soul of Fright + 5 Ectoplasm) v noci",
+        summon: "Naughty Present (20 Silk + 5 Soul of Fright + 5 Ectoplasm) at night",
         hp: "13,000 - 20,800",
         drops: "Razorpine, Christmas Tree Sword, Festive Wings",
-        notes: "Vypouští borovicové jehličí a ornamenty."
+        notes: "Fires pine needles and bouncing ornament explosives."
       },
       {
         name: "Santa-NK1",
         stage: "Event Boss",
         biome: "Frost Moon",
-        summon: "Naughty Present v noci (střední vlny)",
+        summon: "Naughty Present at night (mid-tier waves)",
         hp: "18,000 - 28,800",
         drops: "Elf Melter, Chain Gun",
-        notes: "Mechanický Mikołaj s kulometem a raketometem."
+        notes: "Mechanical Santa tank with a minigun and rocket launcher."
       },
       {
         name: "Ice Queen",
         stage: "Event Boss",
         biome: "Frost Moon",
-        summon: "Naughty Present v noci (pokročilé vlny)",
+        summon: "Naughty Present at night (advanced waves)",
         hp: "34,000 - 54,400",
         drops: "Blizzard Staff, Snowman Cannon, Baby Grinch's Mischief Whistle",
-        notes: "Rychle létající boss zaměřující se na ledové útoky z výšky."
+        notes: "Fast-flying boss focusing on frost projectile waves from above."
       },
       {
         name: "Martian Saucer",
         stage: "Event Boss",
         biome: "Martian Madness",
-        summon: "Být odhalen Martian Probe na povrchu / ve vesmíru po Golemovi",
+        summon: "Get detected by a Martian Probe on the Surface/Space after Golem",
         hp: "27,000 - 40,500",
         drops: "Influx Waver, Cosmic Car Key, Laser Drill, Xenopopper",
-        notes: "UFO s 2 fázemi. V 2. fázi střílí nebezpečný smrtící paprsek (Deathray)."
+        notes: "UFO miniboss. Fires a deadly Deathray laser during its second phase."
       }
     ];
 
     const bossList = document.getElementById('bossList');
     const searchInput = document.getElementById('searchInput');
     const stageFilter = document.getElementById('stageFilter');
+
+    function toggleBoss(index) {
+      const details = document.getElementById(`details-${index}`);
+      const chevron = document.getElementById(`chevron-${index}`);
+      details.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
 
     function renderBosses() {
       const search = searchInput.value.toLowerCase();
@@ -332,29 +348,42 @@
         return matchesSearch && matchesStage;
       });
 
-      bossList.innerHTML = filtered.map(b => `
-        <div class="bg-gray-800 border border-gray-700 rounded-xl p-5 shadow-md flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
+      if (filtered.length === 0) {
+        bossList.innerHTML = `<p class="text-center text-gray-400 py-8">No bosses found matching your search.</p>`;
+        return;
+      }
+
+      bossList.innerHTML = filtered.map((b, index) => `
+        <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden shadow-md transition hover:border-gray-600">
+          <!-- Clickable Header -->
+          <button onclick="toggleBoss(${index})" class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-750 transition focus:outline-none">
+            <div>
               <h2 class="text-xl font-bold text-green-400">${b.name}</h2>
-              <span class="text-xs px-2 py-1 bg-gray-700 text-gray-300 rounded font-semibold">${b.stage}</span>
+              <span class="text-xs text-gray-400 font-medium">📍 ${b.biome}</span>
             </div>
-            
-            <p class="text-sm text-gray-400 mb-3">📍 <strong>Biom:</strong> ${b.biome}</p>
-            
-            <div class="bg-gray-900 p-3 rounded-lg mb-3 border border-gray-800">
-              <p class="text-sm text-yellow-400 font-semibold mb-1">🔮 Vyvolání (Summon):</p>
-              <p class="text-xs text-gray-300">${b.summon}</p>
+            <div class="flex items-center gap-3">
+              <span class="text-xs px-2.5 py-1 bg-gray-700 text-gray-300 rounded-full font-semibold">${b.stage}</span>
+              <svg id="chevron-${index}" class="w-5 h-5 text-gray-400 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+
+          <!-- Collapsible Details -->
+          <div id="details-${index}" class="hidden p-4 pt-0 border-t border-gray-700/50 mt-1">
+            <div class="bg-gray-900 p-3 rounded-lg my-3 border border-gray-800">
+              <p class="text-sm text-yellow-400 font-semibold mb-1">🔮 How to Summon:</p>
+              <p class="text-xs text-gray-300 leading-relaxed">${b.summon}</p>
             </div>
 
-            <div class="text-xs text-gray-300 space-y-1 mb-3">
-              <p>❤️ <strong>Zdraví (HP):</strong> ${b.hp}</p>
-              <p>🎁 <strong>Dropy:</strong> ${b.drops}</p>
+            <div class="text-xs text-gray-300 space-y-1.5 mb-3">
+              <p>❤️ <strong class="text-gray-200">Health (HP):</strong> ${b.hp}</p>
+              <p>🎁 <strong class="text-gray-200">Key Drops:</strong> ${b.drops}</p>
             </div>
-          </div>
 
-          <div class="pt-2 border-t border-gray-700 mt-2">
-            <p class="text-xs italic text-gray-400">💡 ${b.notes}</p>
+            <div class="pt-2 border-t border-gray-700/50">
+              <p class="text-xs italic text-gray-400">💡 ${b.notes}</p>
+            </div>
           </div>
         </div>
       `).join('');
